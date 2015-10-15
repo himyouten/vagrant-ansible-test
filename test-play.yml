@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+    - name: "install epel repository"
+      yum: name=epel-release state=present
+    - name: "install base packages"
+      yum: name={{ item }} enablerepo=epel state=present
+      with_items:
+        - libselinux-python
+    - name: "copy test"
+      copy: src="files/test.txt" dest="/tmp/test.txt"
+    - name: "template test"
+      template: src="files/template-test.txt.tpl" dest="/tmp/template-test.txt"      
